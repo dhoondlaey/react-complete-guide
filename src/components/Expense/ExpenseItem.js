@@ -1,15 +1,17 @@
+import React, { useState } from "react";
+
 import "./styles/ExpenseItem.css";
 import ExpenseDate from "./ExpenseDate";
-import Card from '../UI/Card';
-import React from 'react';
+import {Card} from "../UI";
 
 const ExpensionItem = (props) => {
-
-  let title = props.title;
+  //react hook
+  const [title, setTitle] = useState(props.title);
 
   const clickHandler = () => {
-    title= "Updated";
-  }
+    setTitle("Updated");
+  };
+
   return (
     <Card className="expense-item">
       <ExpenseDate date={props.date} />
@@ -21,6 +23,6 @@ const ExpensionItem = (props) => {
       <button onClick={clickHandler}>Change Title</button>
     </Card>
   );
-}
+};
 
 export default ExpensionItem;

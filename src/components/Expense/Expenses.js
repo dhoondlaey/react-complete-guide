@@ -1,8 +1,7 @@
-import Card from "../UI/Card";
+import {Card} from "../UI";
 import ExpensionItem from "./ExpenseItem";
 import './styles/Expenses.css'
 import React from 'react';
-
 
 const Expense = (props) => {
    let expenses= props.expenses
@@ -22,7 +21,7 @@ const Expense = (props) => {
         id={expenses[1].id}
       ></ExpensionItem>
     </Card>
-  );
+  )
 }
 
 export default Expense;
