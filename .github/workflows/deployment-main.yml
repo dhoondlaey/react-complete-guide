@@ -44,11 +44,11 @@ jobs:
 #           push: true
 #           tags: iampsjain/react-complete-guide:latest
 
-#     - name: Configure SSH
-#       run: |
-#         mkdir -p ~/.ssh
-#         echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-#         chmod 600 ~/.ssh/id_rsa
+      - name: Configure SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
 
 #     - name: Log in to Docker and pull the latest image
 #       run: |
