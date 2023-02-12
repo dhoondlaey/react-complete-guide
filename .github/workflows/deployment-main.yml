@@ -5,7 +5,7 @@ on:
     branches: [ "deployment-testing" ]
   pull_request:
     branches: [ "deployment-testing" ]
-env:
+env: 
   AWS_REGION: us-east-2
   DOCKER_TAG: 0.1
   DOCKER_REGISTRY: docker.io
