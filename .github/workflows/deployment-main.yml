@@ -47,7 +47,7 @@ jobs:
       env:
         PEM_FILE: ${{ secrets.PEM_FILE }}
       run: |
-          echo "$PEM_FILE" > file.pem && chmod 600 file.pem
+          echo "$PEM_FILE" > file.pem && chmod 400 file.pem
           ssh -T -o StrictHostKeyChecking=no -i file.pem ec2-user@${{ vars.AWS_HOST_NAME }}
 
 #     - name: Log in to Docker and pull the latest image
