@@ -37,7 +37,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Log Secret
-      run: echo "${{ secrets.TEST_SECRET }}"
+      run: echo "${{ secrets.TEST_SECRET_1 }}"
 
 #     - name: Use Node.js ${{ matrix.node-version }}
 #       uses: actions/setup-node@v3
