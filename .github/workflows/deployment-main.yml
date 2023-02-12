@@ -51,7 +51,9 @@ jobs:
       uses: easingthemes/ssh-deploy@v2.1.5
       env:
           SSH_PRIVATE_KEY: ${{ secrets.ECS_SSHKEY }}
-          SOURCE: "./"
           REMOTE_HOST: ${{ secrets.AWS_HOST_NAME }}
           REMOTE_USER: ${{ vars.AWS_INSTANCE_USER }}
-          TARGET: ${{ vars.AWS_APPLICATION_PATH }}
+          SCRIPT_AFTER: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }} 
+                        docker pull iampsjain/react-complete-guide:latest
+                        docker run -d --name iampsjain/react-complete-guide:latest -p 80:3000 iampsjain/react-complete-guide:latest
+
