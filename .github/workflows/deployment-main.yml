@@ -51,7 +51,7 @@ jobs:
         tags: react-app-dev:${{ env.GITHUB_SHA }}
         context: .
 
-    - name: Set up AWS Credentials
+    - name: Configure AWS Credentials Action For GitHub Actions
       uses: aws-actions/configure-aws-credentials@v1
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
