@@ -43,14 +43,23 @@ jobs:
 #           push: true
 #           tags: iampsjain/react-complete-guide:latest
 
-    - name: Configure SSH
-      run: |
-          echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > login.pem
-          chmod 400 login.pem
+#     - name: Configure SSH
+#       run: |
+#           echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > login.pem
+#           chmod 400 login.pem
 
-    - name: Log in to Docker and pull the latest image
-      run: |
-          ssh -o StrictHostKeyChecking=no -i login.pem ec2-user@${{ vars.AWS_HOST_NAME }} \
-          "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
-          docker pull ${{ vars.DOCKER_IMAGE}} && \
-          docker run ${{ vars.DOCKER_IMAGE}}"
+
+    - name: Deploy to EC2
+      uses: actions/ssh-action@v1
+      with:
+        ssh-private-key: ${{ secrets.ECS_SSHKEY }}
+        host: ${{ vars.AWS_HOST_NAME }}
+        username: ec2-user
+        command: "echo hostname;"
+#docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run ${{ vars.DOCKER_IMAGE}}
+#     - name: Log in to Docker and pull the latest image
+#       run: |
+#           ssh -o StrictHostKeyChecking=no -i login.pem ec2-user@${{ vars.AWS_HOST_NAME }} \
+#           "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
+#           docker pull ${{ vars.DOCKER_IMAGE}} && \
+#           docker run ${{ vars.DOCKER_IMAGE}}"
