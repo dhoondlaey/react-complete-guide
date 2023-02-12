@@ -51,19 +51,14 @@ jobs:
         tags: react-app-dev:${{ env.GITHUB_SHA }}
         context: .
 
-    - name: Configure AWS Credentials Action For GitHub Actions
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}
-
     - name: Deploy to EC2
-      uses: aws-actions/ec2-instance-management@v1
+      uses: aws-actions/ec2-instance-management@v2
       with:
-        command: create-or-update
-        region: ${{ env.AWS_REGION }}
-        instance-id: i-0f93db0dfa1468ef1
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        region: us-west-2
+        instance_ids: i-0f93db0dfa1468ef1
+        command: start
         tags: Name=react-dev
         user-data: |
           #!/bin/bash
