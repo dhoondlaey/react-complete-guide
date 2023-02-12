@@ -43,12 +43,10 @@ jobs:
 #       with:
 #           push: true
 #           tags: iampsjain/react-complete-guide:latest
-      env:
-          PRIVATE_KEY: ${{ secrets.ECS_SSHKEY }}
     - name: Configure SSH
       run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ vars.AWS_HOST_NAME }} '
+          echo " ${{ secrets.ECS_SSHKEY }}" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ vars.AWS_HOST_NAME }}
 
 #     - name: Log in to Docker and pull the latest image
 #       run: |
