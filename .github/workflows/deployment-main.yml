@@ -43,15 +43,19 @@ jobs:
           push: true
           tags: iampsjain/react-complete-guide:latest
 
-    - name: Configure SSH
+#     - name: Configure SSH
+#       run: |
+#           mkdir -p ~/.ssh
+#           echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+#           chmod 400 ~/.ssh/id_rsa
+    - name: Create Pem file
       run: |
-          mkdir -p ~/.ssh
-          echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 400 ~/.ssh/id_rsa
+            echo ${{ secrets.ECS_SSHKEY }} > login.pem
+            chmod 400 login.pem
 
     - name: Log in to Docker and pull the latest image
       run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ec2-user@${{ secrets.AWS_HOST_NAME }} \
+          ssh -o StrictHostKeyChecking=no -i login.pem ec2-user@${{ secrets.AWS_HOST_NAME }} \
           "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
           docker pull ${{ vars.DOCKER_IMAGE}} && \
           docker run ${{ vars.DOCKER_IMAGE}}"
