@@ -47,7 +47,7 @@ jobs:
       run: |
           mkdir -p ~/.ssh
           echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-          chmod 777 ~/.ssh/id_rsa
+          chmod 400 ~/.ssh/id_rsa
 
     - name: Log in to Docker and pull the latest image
       run: |
