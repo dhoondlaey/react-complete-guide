@@ -7,6 +7,7 @@ on:
     branches: [ "master" ]
 env:
   AWS_REGION: us-east-2
+  DOCKER_TAG: 0.1
 
 jobs:
 #   build:
@@ -46,7 +47,7 @@ jobs:
       with:
         context: .
         push: true
-        tags: "image-${{ env.GITHUB_SHA }}"
+        tags: ${{ env.DOCKER_TAG }}
 
 #     - name: Deploy to EC2
 #       uses: aws-actions/configure-aws-credentials@v1
