@@ -53,5 +53,5 @@ jobs:
 #           SSH_PRIVATE_KEY: ${{ secrets.ECS_SSHKEY }}
 #           SOURCE: "./"
 #           REMOTE_HOST: ${{ secrets.AWS_HOST_NAME }}
-#           REMOTE_USER: ${{ env.AWS_INSTANCE_USER }}
-#           TARGET: ${{ env.AWS_APPLICATION_PATH }}
+#           REMOTE_USER: ${{ vars.AWS_INSTANCE_USER }}
+#           TARGET: ${{ vars.AWS_APPLICATION_PATH }}
