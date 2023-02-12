@@ -46,7 +46,7 @@ jobs:
     - name: Configure SSH
       run: |
           echo " ${{ secrets.ECS_SSHKEY }}" > private_key && chmod 600 private_key
-          ssh -t -o StrictHostKeyChecking=no -i private_key ec2-user@${{ vars.AWS_HOST_NAME }}
+          ssh -T -o StrictHostKeyChecking=no -i private_key ec2-user@${{ vars.AWS_HOST_NAME }}
 
 #     - name: Log in to Docker and pull the latest image
 #       run: |
