@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import './styles/NewExpense.css';
 import ExpenseForm  from "./ExpenseForm";
 
@@ -9,11 +9,20 @@ const NewExpense = (props) =>{
             id: Math.random().toString()
         }
         props.onAddExpense(expenseData);
-        // console.log(expenseData);
+    }
+    const [showExpenseForm,setShowExpenseForm] = useState(false);
+    const onChangeState = () =>{
+        setShowExpenseForm(true);
     }
 
+    const hideExpenseForm = () =>{
+        setShowExpenseForm(false);
+    }
+    
     return <div className="new-expense">
-        <ExpenseForm  onSaveExpenseData={saveExpenseDataHandler} />
+        {!showExpenseForm && <button onClick={onChangeState}>Add New Expense</button>}
+        {showExpenseForm && <ExpenseForm  onChangeState={hideExpenseForm}  onSaveExpenseData={saveExpenseDataHandler} />}
+        
     </div>
 }
 

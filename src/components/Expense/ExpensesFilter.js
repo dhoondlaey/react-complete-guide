@@ -2,6 +2,7 @@ import React from "react";
 import "./styles/ExpensesFilter.css";
 
 const ExpensesFilter = (props) => {
+  
   let availableYears = [...new Set(props.availableYears)];
 
   const selectValueHandler = (event) => {
@@ -13,8 +14,8 @@ const ExpensesFilter = (props) => {
       <div className="expenses-filter__control">
         <label>Filter by year</label>
         <select onChange={selectValueHandler}>
-          {availableYears.map((item) => {
-            return <option value={item}>{item}</option>
+          {availableYears.map((item,index) => {
+            return <option key={index} value={item} >{item}</option>
           })};
         </select>
       </div>
