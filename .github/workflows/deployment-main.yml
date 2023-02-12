@@ -43,15 +43,15 @@ jobs:
           push: true
           tags: iampsjain/react-complete-guide:latest
 
-#     - name: Configure SSH
-#       run: |
-#           mkdir -p ~/cert
-#           echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/cert/login.pem
-#           chmod 400 ~/cert/login.pem
-    - name: Create Pem file
+    - name: Configure SSH
       run: |
-            echo ${{ secrets.ECS_SSHKEY }} > login.pem
-            chmod 400 login.pem
+          mkdir -p ~/cert
+          echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/cert/login.pem
+          chmod 400 ~/cert/login.pem
+#     - name: Create Pem file
+#       run: |
+#             echo ${{ secrets.ECS_SSHKEY }} > login.pem
+#             chmod 400 login.pem
 
     - name: Log in to Docker and pull the latest image
       run: |
