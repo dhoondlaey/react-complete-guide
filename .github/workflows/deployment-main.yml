@@ -19,6 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Log Secret
+     
       run: echo "${{ vars.AWS_INSTANCE_USER }}"
 
 #     - name: Use Node.js ${{ matrix.node-version }}
@@ -42,15 +43,16 @@ jobs:
 #       with:
 #           push: true
 #           tags: iampsjain/react-complete-guide:latest
-
+      env:
+          PRIVATE_KEY: ${{ secrets.ECS_SSHKEY }}
     - name: Configure SSH
       run: |
-          echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/login.txt
-          chmod 400 ~/login.txt 
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ec2-user@${{ vars.AWS_HOST_NAME }} '
 
-    - name: Log in to Docker and pull the latest image
-      run: |
-          ssh -o StrictHostKeyChecking=no -i ~/login.txt ec2-user@${{ vars.AWS_HOST_NAME }} \
-          "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
-          docker pull ${{ vars.DOCKER_IMAGE}} && \
-          docker run ${{ vars.DOCKER_IMAGE}}"
+#     - name: Log in to Docker and pull the latest image
+#       run: |
+#           ssh -o StrictHostKeyChecking=no -i ~/login.txt ec2-user@${{ vars.AWS_HOST_NAME }} \
+#           "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
+#           docker pull ${{ vars.DOCKER_IMAGE}} && \
+#           docker run ${{ vars.DOCKER_IMAGE}}"
