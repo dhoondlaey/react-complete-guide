@@ -46,7 +46,7 @@ jobs:
     - name: Configure SSH
       run: |
           echo " ${{ secrets.ECS_SSHKEY }}" | tr -d '\r' > ~/login.txt
-          chmod 400 ~/login.txt
+          chmod 400 ~/login.txt 
 
     - name: Log in to Docker and pull the latest image
       run: |
