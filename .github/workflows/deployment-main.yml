@@ -44,11 +44,14 @@ jobs:
 #           push: true
 #           tags: iampsjain/react-complete-guide:latest
     - name: Configure SSH
-      env:
-        PEM_FILE: ${{ secrets.PEM_FILE }}
-      run: |
-          echo "$PEM_FILE" > file.pem && chmod 400 file.pem
-          ssh -T -o StrictHostKeyChecking=no -i file.pem ec2-user@${{ vars.AWS_HOST_NAME }}
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+          host: ${{ vars.AWS_HOST_NAME }}
+          username: ${{ secrets.AWS_EC2_USERNAME }}
+          password: ${{ secrets.AWS_EC2_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: whoami
+
 
 #     - name: Log in to Docker and pull the latest image
 #       run: |
