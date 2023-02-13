@@ -6,7 +6,6 @@ on:
       - '*'
 env: 
   AWS_REGION: us-east-2
-  DOCKER_TAG: iampsjain/react-complete-guide:$(echo ${{ github.ref }} | sed 's|refs/tags/||')
   DOCKER_REGISTRY: docker.io
   DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
@@ -18,8 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Log Secret
-     
       run: echo "${{ vars.AWS_INSTANCE_USER }}"
+
+    - name: Get Tag Version
+      id: get_tag
+      run: echo "::set-env name=TAG_VERSION::$(echo ${{ github.ref }} | sed 's|refs/tags/v||')"
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
@@ -31,6 +33,7 @@ jobs:
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v2
+
     - name: Login to Docker Hub
       uses: docker/login-action@v2
       with:
@@ -41,7 +44,7 @@ jobs:
       uses: docker/build-push-action@v4
       with:
           push: true
-          tags: iampsjain/react-complete-guide:$(echo ${{ github.ref }} | sed 's|refs/tags/||')
+          tags: iampsjain/react-complete-guide:${{ env.TAG_VERSION }}
 
     - name: Configure SSH
       uses: appleboy/ssh-action@v0.1.7
@@ -50,4 +53,4 @@ jobs:
           username: ${{ secrets.AWS_EC2_USERNAME }}
           password: ${{ secrets.AWS_EC2_PASSWORD }}
           port: ${{ secrets.AWS_EC2_PORT }}
-          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run -i -d -p 22 -p 80:3000 iampsjain/react-complete-guide:$(echo ${{ github.ref }} | sed 's|refs/tags/||')"
+          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run -i -d -p 22 -p 80:3000 iampsjain/react-complete-guide:${{ env.TAG_VERSION }}"
