@@ -21,7 +21,8 @@ jobs:
 
     - name: Get Tag Version
       id: get_tag
-      run: echo "::set-env name=TAG_VERSION::$(echo ${{ github.ref }} | sed 's|refs/tags/v||')"
+      run: |
+        echo "TAG_VERSION=$(echo ${{ github.ref }} | sed 's|refs/tags/v||')" >> $GITHUB_ENV
 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
