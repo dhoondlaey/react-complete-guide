@@ -22,35 +22,36 @@ jobs:
      
       run: echo "${{ vars.AWS_INSTANCE_USER }}"
 
-#     - name: Use Node.js ${{ matrix.node-version }}
-#       uses: actions/setup-node@v3
-#       with:
-#         node-version: ${{ matrix.node-version }}
-#         cache: 'npm'
-#     - run: npm ci
-#     - run: npm run build --if-present
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run build --if-present
 
-#     - name: Set up Docker Buildx
-#       uses: docker/setup-buildx-action@v2
-#     - name: Login to Docker Hub
-#       uses: docker/login-action@v2
-#       with:
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+         username: ${{ secrets.DOCKER_USERNAME }}
+         password: ${{ secrets.DOCKER_PASSWORD }}
          
-#     - name: Build and push
-#       uses: docker/build-push-action@v4
-#       with:
-#           push: true
-#           tags: iampsjain/react-complete-guide:latest
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+          push: true
+          tags: iampsjain/react-complete-guide:latest
+
     - name: Configure SSH
       uses: appleboy/ssh-action@v0.1.7
       with:
           host: ${{ vars.AWS_HOST_NAME }}
           username: ${{ secrets.AWS_EC2_USERNAME }}
           password: ${{ secrets.AWS_EC2_PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: whoami
+          port: ${{ secrets.AWS_EC2_PORT }}
+          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run ${{ vars.DOCKER_IMAGE}}"
 
 
 #     - name: Log in to Docker and pull the latest image
