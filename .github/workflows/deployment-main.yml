@@ -51,12 +51,4 @@ jobs:
           username: ${{ secrets.AWS_EC2_USERNAME }}
           password: ${{ secrets.AWS_EC2_PASSWORD }}
           port: ${{ secrets.AWS_EC2_PORT }}
-          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run ${{ vars.DOCKER_IMAGE}}"
-
-
-#     - name: Log in to Docker and pull the latest image
-#       run: |
-#           ssh -o StrictHostKeyChecking=no -i ~/login.txt ec2-user@${{ vars.AWS_HOST_NAME }} \
-#           "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && \
-#           docker pull ${{ vars.DOCKER_IMAGE}} && \
-#           docker run ${{ vars.DOCKER_IMAGE}}"
+          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}} && docker run -d ${{ vars.DOCKER_IMAGE}}"
