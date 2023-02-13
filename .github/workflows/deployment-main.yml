@@ -2,9 +2,9 @@ name: Deploy React App to EC2
 
 on:
   push:
-    branches: [ "deployment-testing" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "deployment-testing" ]
+    branches: [ "master" ]
 env: 
   AWS_REGION: us-east-2
   DOCKER_TAG: 0.1
