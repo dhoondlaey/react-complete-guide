@@ -1,4 +1,4 @@
-name: Deploy application with version $(echo ${{ github.ref }} | sed 's|refs/tags/||')
+name: Deploying application
 
 on:
   push:
