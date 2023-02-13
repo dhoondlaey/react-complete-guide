@@ -54,4 +54,4 @@ jobs:
           username: ${{ secrets.AWS_EC2_USERNAME }}
           password: ${{ secrets.AWS_EC2_PASSWORD }}
           port: ${{ secrets.AWS_EC2_PORT }}
-          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}}:${{ env.TAG_VERSION }} && docker run -i -d -p 22 -p 80:3000 ${{ vars.DOCKER_IMAGE}}:${{ env.TAG_VERSION }}"
+          script: "docker login --username ${{ secrets.DOCKER_USERNAME }} --password ${{ secrets.DOCKER_PASSWORD }} && docker pull ${{ vars.DOCKER_IMAGE}}:${{ env.TAG_VERSION }} && docker stop dev || true && docker rm dev || true &&  docker run --name dev -i -d -p 22 -p 80:3000 ${{ vars.DOCKER_IMAGE}}:${{ env.TAG_VERSION }}"
